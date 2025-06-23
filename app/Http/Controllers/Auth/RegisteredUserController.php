@@ -35,7 +35,6 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'user_type' => ['required', 'in:client,freelancer'],
         ]);
-        dd($request->all());
 
 
         // Step 2: Create the user
