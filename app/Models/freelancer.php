@@ -26,8 +26,4 @@ class freelancer extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function client()
-    {
-        return $this->hasMany(Client::class);
-    }
 }

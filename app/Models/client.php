@@ -24,8 +24,5 @@ class client extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function freelancer()
-    {
-        return $this->hasOne(Freelancer::class);
-    }
+
 }

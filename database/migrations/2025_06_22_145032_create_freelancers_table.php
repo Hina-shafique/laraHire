@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('rating', 3, 2)->default(0.0);
             $table->string('description')->nullable();
             $table->string('skills')->nullable();
-            $table->json('languages')->nullable();
+            $table->json('language')->nullable();
             $table->string('experience')->nullable();
             $table->timestamps();
         });

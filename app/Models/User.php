@@ -48,11 +48,11 @@ class User extends Authenticatable
 
     public function freelancer()
     {
-        return $this->belongsTo(Freelancer::class);
+        return $this->hasOne(Freelancer::class);
     }
 
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->hasOne(Client::class);
     }
 }
