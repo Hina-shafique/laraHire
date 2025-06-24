@@ -28,7 +28,14 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // Redirect based on user type
+        if ($request->user()->client) {
+            return redirect()->intended(route('client.index', absolute: false));
+        } elseif ($request->user()->freelancer) {
+            return redirect()->intended(route('freelancer.index', absolute: false));
+        }
+        
+        abort(404, 'User type not found');
     }
 
     /**
