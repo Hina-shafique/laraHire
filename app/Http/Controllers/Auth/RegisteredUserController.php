@@ -81,9 +81,8 @@ class RegisteredUserController extends Controller
         // Step 5: Redirect to respective dashboard
         if ($request->user_type === 'client') {
             return redirect()->route('client.index');
-        }
-
-        if ($request->user_type === 'freelancer') {
+        }elseif
+         ($request->user_type === 'freelancer') {
             return redirect()->route('freelancer.index');
         }
 
