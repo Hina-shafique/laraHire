@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\client;
 use App\Http\Requests\StoreclientRequest;
 use App\Http\Requests\UpdateclientRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -13,7 +15,13 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return view('client.index');
+        $user = Auth::user(); // get the related client model
+        $client = $user->client;
+        return view('client.index', [
+        'client' => $client,
+        'user' => $user,
+    ]);
+
     }
 
     /**
