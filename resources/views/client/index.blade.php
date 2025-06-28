@@ -32,7 +32,7 @@
         <main class="flex-1 px-6">
             <!-- Input Box -->
             <div class="w-full max-w-3xl space-y-4">
-                <x-main-input-box>Add New Job</x-main-input-box>
+                <x-main-input-box :href="route('post.create')">Add New Job</x-main-input-box>
                 <x-main-input-box>View All Jobs</x-main-input-box>
                 <x-main-input-box>View Active Jobs</x-main-input-box>
             </div>

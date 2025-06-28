@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FreelancerController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,12 @@ Route::middleware(['auth', 'client'])->group(function () {
 
 Route::middleware(['auth', 'freelancer'])->group(function () {
     Route::get('/freelancer', [FreelancerController::class, 'index'])->name('freelancer.index');
+});
+
+Route::middleware(['auth', 'client'])->group(function() {
+    Route::get('/posts', [PostController::class, 'index']);
+    Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
+    Route::post('/posts' ,[PostController::class, 'store']);
 });
 
 require __DIR__.'/auth.php';
