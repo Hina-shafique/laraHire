@@ -6,7 +6,7 @@ use App\Models\post;
 use App\Http\Requests\StorepostRequest;
 use App\Http\Requests\UpdatepostRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::query()->latest()->paginate(5);
         return view('post.index', [
             'posts' => $posts,
         ]);
@@ -34,13 +34,10 @@ class PostController extends Controller
      */
     public function store(StorepostRequest $request)
     {
-
-        dd($request->all());
         // The validation 
         $data = $request->validated();
-
         // Attach the logged-in user ID
-        $data['user_id'] = auth()->id(); 
+        $data['user_id'] = auth()->id();
 
         Post::create($data);
 
@@ -52,7 +49,9 @@ class PostController extends Controller
      */
     public function show(post $post)
     {
-        //
+        return view('post.show',[
+            'post' => $post,
+        ]);
     }
 
     /**
@@ -60,7 +59,9 @@ class PostController extends Controller
      */
     public function edit(post $post)
     {
-        //
+        return view('post.edit', [
+            'post' => $post
+        ]);
     }
 
     /**
@@ -68,7 +69,12 @@ class PostController extends Controller
      */
     public function update(UpdatepostRequest $request, post $post)
     {
-        //
+        $data = $request->validated();
+        $data['user_id'] = auth()->id();
+
+        $post->update($data);
+
+        return redirect()->route('posts.index')->with('success', 'Post updated successfully!');
     }
 
     /**
@@ -76,6 +82,7 @@ class PostController extends Controller
      */
     public function destroy(post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('posts.index');
     }
 }

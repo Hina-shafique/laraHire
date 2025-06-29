@@ -26,7 +26,7 @@
         <main class="flex-1 px-6">
             <!-- Input Box -->
             <div class="w-full max-w-3xl space-y-4">
-                <ul class="list-disc pl-5 space-y-4">
+                <ul class=" pl-5 space-y-4">
                     @foreach ($posts as $post)
                         <x-main-input-box>
                             <li>
@@ -36,13 +36,14 @@
                                     </a>
                                     <p class="text-sm text-gray-300">
                                         Fixed-price · Intermediate · Est. Budget: <span
-                                            class="font-semibold">${{ $post->price }}</span>
+                                            class="font-semibold">${{ $post->price }}</span>.
+                                        Timline: {{ $post->timeline }}
                                     </p>
                                 </div>
                                 <div class="text-sm text-gray-600 leading-relaxed mt-6">
                                     {{ $post->description }}
                                 </div>
-                                <a href="#"
+                                <a href="{{ route('posts.edit', $post->id) }}"
                                     class="mt-6 inline-block border border-gray-300 font-bold px-2 py-1 rounded hover:bg-gray-100 transition">
                                     Edit Post
                                 </a>
@@ -50,6 +51,10 @@
                         </x-main-input-box>
                     @endforeach
                 </ul>
+                <!-- Pagination links -->
+                <div class="mt-4">
+                    {{ $posts->links() }}
+                </div>
             </div>
         </main>
     </div>

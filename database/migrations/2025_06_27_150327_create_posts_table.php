@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('title');
             $table->text('description');
             $table->integer('price');
-            $table->date('timeline'); 
+            $table->string('timeline'); 
             $table->enum('status', ['open', 'in_progress', 'completed'])->default('open');
             $table->timestamps();
 

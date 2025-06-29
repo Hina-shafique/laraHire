@@ -24,8 +24,8 @@ class StorepostRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            'timeline' => 'required|date',
+            'price' => 'required|integer',
+            'timeline' => 'required|string',
         ];
     }
 }

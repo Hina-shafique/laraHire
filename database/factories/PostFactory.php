@@ -17,11 +17,11 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => 2,
+            'user_id' => 1,
             'title' => fake()->sentence(5),
             'description'=> fake()->sentence(),
             'price' => fake()->numberBetween(23,500),
-            'timeline' => fake()->date(),
+            'timeline' => fake()->numberBetween(1, 10) . ' days',
         ];
     }
 }
