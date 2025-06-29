@@ -22,16 +22,13 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'client'])->group(function () {
     Route::get('/client', [ClientController::class, 'index'])->name('client.index');
+    Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+    Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
+    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 });
 
 Route::middleware(['auth', 'freelancer'])->group(function () {
     Route::get('/freelancer', [FreelancerController::class, 'index'])->name('freelancer.index');
 });
 
-Route::middleware(['auth', 'client'])->group(function() {
-    Route::get('/posts', [PostController::class, 'index']);
-    Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
-    Route::post('/posts' ,[PostController::class, 'store']);
-});
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

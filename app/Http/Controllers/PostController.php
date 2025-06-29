@@ -6,6 +6,7 @@ use App\Models\post;
 use App\Http\Requests\StorepostRequest;
 use App\Http\Requests\UpdatepostRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request; 
 
 class PostController extends Controller
 {
@@ -33,7 +34,8 @@ class PostController extends Controller
      */
     public function store(StorepostRequest $request)
     {
-        dd(auth()->user());
+
+        dd($request->all());
         // The validation 
         $data = $request->validated();
 
@@ -42,7 +44,7 @@ class PostController extends Controller
 
         Post::create($data);
 
-        return redirect()->route('posts')->with('success', 'Post created successfully!');
+        return redirect()->route('posts.index')->with('success', 'Post created successfully!');
     }
 
     /**

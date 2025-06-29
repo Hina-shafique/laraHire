@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-10">
-        <form action="/posts" method="POST"
+        <form action={{ route('posts.store') }} method="POST"
             class="bg-white shadow-md rounded-lg w-full max-w-xl p-8 space-y-6 border border-gray-200">
             @csrf
 
