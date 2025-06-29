@@ -47,7 +47,7 @@
                 </a>
                 <button type="submit"
                     class="inline-block px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-500 text-sm font-medium shadow-sm">
-                    Save
+                    Update
                 </button>
             </div>
             @if ($errors->any())

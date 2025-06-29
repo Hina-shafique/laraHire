@@ -40,7 +40,7 @@
 
             <!-- Buttons -->
             <div class="flex justify-end space-x-4">
-                <a href="{{ route('dashboard') }}"
+                <a href="{{ route('posts.index') }}"
                     class="inline-block px-4 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-100 text-sm">
                     Cancel
                 </a>

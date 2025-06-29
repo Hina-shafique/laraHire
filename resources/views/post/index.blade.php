@@ -31,7 +31,8 @@
                         <x-main-input-box>
                             <li>
                                 <div class="">
-                                    <a href="" class="{{ $post->status ? 'text-xl font-semibold' : 'text-gray-700' }}">
+                                    <a href="{{ route('posts.show', $post->id) }}"
+                                        class="{{ $post->status ? 'text-xl font-semibold' : 'text-gray-700' }}">
                                         {{ $post->title }}
                                     </a>
                                     <p class="text-sm text-gray-300">
@@ -46,6 +47,10 @@
                                 <a href="{{ route('posts.edit', $post->id) }}"
                                     class="mt-6 inline-block border border-gray-300 font-bold px-2 py-1 rounded hover:bg-gray-100 transition">
                                     Edit Post
+                                </a>
+                                <a href="{{ route('posts.show', $post->id) }}"
+                                    class="mt-6 inline-block border border-gray-300 font-bold px-2 py-1 rounded hover:bg-gray-100 transition">
+                                    Show Post
                                 </a>
                             </li>
                         </x-main-input-box>

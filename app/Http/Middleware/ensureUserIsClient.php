@@ -15,17 +15,12 @@ class ensureUserIsClient
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = auth()->user();
+        $user = $request->user();
 
-        if (!$user) {
-            dd('No user is logged in.');
+        if(!$user || !$user->client) {
+            abort(403, 'access denied');
         }
-
-        if (!$user->client) {
-            dd('User does not have a client profile.', $user->toArray());
-        }
-
+        
         return $next($request);
     }
-
 }
