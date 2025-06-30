@@ -4,21 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\post;
 use App\Models\User;
-use App\Models\proposal;
 
-class freelancer extends Model
+class proposal extends Model
 {
-    /** @use HasFactory<\Database\Factories\FreelancerFactory> */
+    /** @use HasFactory<\Database\Factories\ProposalFactory> */
     use HasFactory;
 
     protected $fillable = [
         'user_id',
-        'rating',
-        'description',
-        'skills',
-        'language',
-        'experience',
+        'post_id',
+        'message',
+        'file_path',
     ];
 
     public function user()
@@ -26,9 +24,9 @@ class freelancer extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function proposal()
+    public function post()
     {
-        return $this->hasMany(proposal::class);
+        return $this->belongsTo(Post::class);
     }
 
 }

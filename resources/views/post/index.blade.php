@@ -10,7 +10,7 @@
         <!-- Sidebar -->
         <aside class="w-64 flex-shrink-0 flex flex-col p-4 space-y-6 border border-gray-300 bg-white shadow-md">
             <x-aside-box :title="'Total Jobs'">
-                <p class="mb-2"><strong>Total Jobs You Create:</strong> 6 </p>
+                <p class="mb-2"><strong>Total Jobs You Create:</strong> {{ $user->posts->count() }} </p>
             </x-aside-box>
 
             <x-aside-box :title="'Active Jobs'">
@@ -18,7 +18,7 @@
             </x-aside-box>
 
             <x-aside-box :title="'Total Spend'">
-                <p class="mb-2"><strong>Your Total Spend:</strong> $200</p>
+                <p class="mb-2"><strong>Your Total Spend:</strong> $.{{ $user->posts->sum('price') }}</p>
             </x-aside-box>
         </aside>
 
@@ -30,11 +30,18 @@
                     @foreach ($posts as $post)
                         <x-main-input-box>
                             <li>
-                                <div class="">
+                                <div>
                                     <a href="{{ route('posts.show', $post->id) }}"
                                         class="{{ $post->status ? 'text-xl font-semibold' : 'text-gray-700' }}">
                                         {{ $post->title }}
                                     </a>
+                                    <span
+                                        class="px-3 py-1 text-sm font-medium rounded-full
+                                                            {{ $post->status === 'open' ? 'bg-green-100 text-green-800' : ($post->status === 'in_progress' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-300 text-gray-700') }}">
+                                        {{ ucfirst($post->status) }}
+                                    </span>
+                                </div>
+                                <div>
                                     <p class="text-sm text-gray-300">
                                         Fixed-price · Intermediate · Est. Budget: <span
                                             class="font-semibold">${{ $post->price }}</span>.

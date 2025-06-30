@@ -15,9 +15,11 @@ class PostController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $posts = Post::query()->latest()->paginate(5);
         return view('post.index', [
             'posts' => $posts,
+            'user' => $user,
         ]);
     }
 
@@ -49,7 +51,7 @@ class PostController extends Controller
      */
     public function show(post $post)
     {
-        return view('post.show',[
+        return view('post.show', [
             'post' => $post,
         ]);
     }
@@ -84,5 +86,20 @@ class PostController extends Controller
     {
         $post->delete();
         return redirect()->route('posts.index');
+    }
+
+    public function explore()
+    {
+        $posts = Post::where('status', 'open')->latest()->paginate(10);
+        return view('freelancer.posts.index', [
+            'posts' => $posts,
+        ]);
+    }
+
+    public function display(post $post)
+    {
+        return view('freelancer.posts.display',[
+            'post' => $post,
+        ]);
     }
 }

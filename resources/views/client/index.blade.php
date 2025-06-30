@@ -24,7 +24,7 @@
             </x-aside-box>
 
             <x-aside-box :title="'Total Spend'">
-                <p class="mb-2"><strong>Your Total Spend:</strong> $200</p>
+                <p class="mb-2"><strong>Your Total Spend:</strong> $.{{ $user->posts->sum('price') }}</p>
             </x-aside-box>
         </aside>
 
@@ -33,8 +33,8 @@
             <!-- Input Box -->
             <div class="w-full max-w-3xl space-y-4">
                 <x-main-input-box :href="route('post.create')">Add New Job</x-main-input-box>
-                <x-main-input-box>View All Jobs</x-main-input-box>
-                <x-main-input-box>View Active Jobs</x-main-input-box>
+                <x-main-input-box :href="route('posts.index')">View All Jobs</x-main-input-box>
+                <x-main-input-box :href="route('posts.index')">View Active Jobs</x-main-input-box>
             </div>
         </main>
     </div>

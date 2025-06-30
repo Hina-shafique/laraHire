@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\freelancer;
 use App\Http\Requests\StorefreelancerRequest;
 use App\Http\Requests\UpdatefreelancerRequest;
+use Illuminate\Support\Facades\Auth;
 
 class FreelancerController extends Controller
 {
@@ -13,7 +14,12 @@ class FreelancerController extends Controller
      */
     public function index()
     {
-        return view('freelancer.index');
+        $user = Auth::user();
+        $freelancer = $user->freelancer;
+        return view('freelancer.index',[
+            'user' => $user,
+            'freelancer' => $freelancer,
+        ]);
     }
 
     /**

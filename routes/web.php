@@ -4,6 +4,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FreelancerController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProposalController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,19 +21,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'client'])->group(function () {
-    Route::get('/client', [ClientController::class, 'index'])->name('client.index');
-    Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-    Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
-    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
-    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
-    Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
-    Route::patch('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
-    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.delete');
-});
-
 Route::middleware(['auth', 'freelancer'])->group(function () {
     Route::get('/freelancer', [FreelancerController::class, 'index'])->name('freelancer.index');
+
+    Route::get('/freelancer/posts', [PostController::class, 'explore'])->name('freelancer.explore');
+    Route::get('freelancer/posts/{post}', [PostController::class, 'display'])->name('freelancer.display');
+
+    Route::get('/posts/{post}/proposal/create', [ProposalController::class, 'create'])->name('proposal.create');
+    Route::post('/posts/{post}/proposal', [ProposalController::class, 'store'])->name('proposal.store');
 });
 
 require __DIR__ . '/auth.php';
+require __DIR__. '/client.php';

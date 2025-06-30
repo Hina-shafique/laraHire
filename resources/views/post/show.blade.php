@@ -23,28 +23,33 @@
             </div>
         </div>
 
+        <span
+            class="px-3 py-1 text-sm font-medium rounded-full 
+            {{ $post->status === 'open' ? 'bg-green-100 text-green-800' : ($post->status === 'in_progress' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-300 text-gray-700') }}">
+            {{ ucfirst($post->status) }}
+        </span>
+
         <!-- Action Buttons -->
         <div class="flex flex-wrap items-center gap-4 pt-4 border-t border-gray-100">
 
             <!-- Edit -->
             <a href="{{ route('posts.edit', $post->id) }}"
-               class="inline-block px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500 transition">
+                class="inline-block px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500 transition">
                 ✏️ Edit Post
             </a>
 
             <!-- Go Back -->
             <a href="{{ route('posts.index') }}"
-               class="inline-block px-4 py-2 bg-gray-100 text-gray-800 border border-gray-300 rounded hover:bg-gray-200 transition">
+                class="inline-block px-4 py-2 bg-gray-100 text-gray-800 border border-gray-300 rounded hover:bg-gray-200 transition">
                 ← Go Back
             </a>
 
             <!-- Delete -->
             <form action="{{ route('posts.delete', $post->id) }}" method="POST"
-                  onsubmit="return confirm('Are you sure you want to delete this post?')">
+                onsubmit="return confirm('Are you sure you want to delete this post?')">
                 @csrf
                 @method('DELETE')
-                <button type="submit"
-                        class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">
+                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">
                     🗑️ Delete
                 </button>
             </form>

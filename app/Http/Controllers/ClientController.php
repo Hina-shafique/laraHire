@@ -6,6 +6,7 @@ use App\Models\client;
 use App\Http\Requests\StoreclientRequest;
 use App\Http\Requests\UpdateclientRequest;
 use App\Models\User;
+use App\Models\post;
 use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
@@ -17,9 +18,11 @@ class ClientController extends Controller
     {
         $user = Auth::user(); // get the related client model
         $client = $user->client;
+        $posts = post::class;
         return view('client.index', [
         'client' => $client,
         'user' => $user,
+        'posts' => $posts,
     ]);
 
     }
