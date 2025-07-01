@@ -6,8 +6,11 @@ use App\Models\client;
 use App\Http\Requests\StoreclientRequest;
 use App\Http\Requests\UpdateclientRequest;
 use App\Models\User;
+use App\Models\proposal;
 use App\Models\post;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\FreelancerHired;
 
 class ClientController extends Controller
 {
@@ -20,10 +23,10 @@ class ClientController extends Controller
         $client = $user->client;
         $posts = post::class;
         return view('client.index', [
-        'client' => $client,
-        'user' => $user,
-        'posts' => $posts,
-    ]);
+            'client' => $client,
+            'user' => $user,
+            'posts' => $posts,
+        ]);
 
     }
 
@@ -73,5 +76,31 @@ class ClientController extends Controller
     public function destroy(client $client)
     {
         //
+    }
+
+    public function viewProposal($id)
+    {
+        $post = Post::with('proposals.freelancer.user')->findOrFail($id);
+
+        if ($post->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return view('client.proposals.index', [
+            'post' => $post,
+        ]);
+    }
+
+    public function hire(Proposal $proposal)
+    {
+        $post = $proposal->post;
+
+        $post->update([
+            'status' => 'in_progress',
+        ]);
+
+        Mail::to($proposal->user->email)->send(new FreelancerHired($proposal));
+
+        return back()->with('success', 'Freelancer hired and email sent.');
     }
 }

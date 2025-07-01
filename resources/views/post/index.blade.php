@@ -59,6 +59,10 @@
                                     class="mt-6 inline-block border border-gray-300 font-bold px-2 py-1 rounded hover:bg-gray-100 transition">
                                     Show Post
                                 </a>
+                                <a href="{{ route('client.post.proposals', $post->id) }}"
+                                    class="mt-6 inline-block border border-gray-300 font-bold px-2 py-1 rounded hover:bg-gray-100 transition">
+                                    View Peoposals
+                                </a>
                             </li>
                         </x-main-input-box>
                     @endforeach

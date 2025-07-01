@@ -29,4 +29,10 @@ class proposal extends Model
         return $this->belongsTo(Post::class);
     }
 
+    public function freelancer()
+    {
+        return $this->belongsTo(Freelancer::class);
+    }
+
+
 }
