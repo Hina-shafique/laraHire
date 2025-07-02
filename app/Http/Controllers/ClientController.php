@@ -11,6 +11,7 @@ use App\Models\post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\FreelancerHired;
+use App\Notifications\freelancerHireNotification;
 
 class ClientController extends Controller
 {
@@ -98,6 +99,8 @@ class ClientController extends Controller
         $post->update([
             'status' => 'in_progress',
         ]);
+
+        $proposal->user->notify(new freelancerHireNotification($proposal));
 
         Mail::to($proposal->user->email)->send(new FreelancerHired($proposal));
 

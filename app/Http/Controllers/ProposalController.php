@@ -14,7 +14,13 @@ class ProposalController extends Controller
      */
     public function index()
     {
-        //
+        $proposals = proposal::with('post')
+        ->where('user_id', Auth()->id())
+        ->latest()
+        ->get();
+        return view('freelancer.proposal.index',[
+            'proposals' => $proposals,
+        ]);
     }
 
     /**

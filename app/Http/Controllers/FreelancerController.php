@@ -69,4 +69,9 @@ class FreelancerController extends Controller
     {
         //
     }
+
+    public function active()
+    {
+        //
+    }
 }

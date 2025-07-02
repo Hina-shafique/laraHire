@@ -1,8 +1,53 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Welcome') }} {{ $user->name }}
-        </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Welcome') }} {{ $user->name }}
+            </h2>
+
+            <!-- Notification Bell with Dropdown -->
+            <div class="relative" x-data="{
+         open: false,
+         markRead() {
+             if (!this.open) {
+                 fetch('{{ route('notifications.markRead') }}', {
+                     method: 'POST',
+                     headers: {
+                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                         'Accept': 'application/json',
+                     }
+                 });
+             }
+         }
+     }">
+
+                <!-- Bell Icon Button -->
+                <button @click="open = !open; markRead()" class="relative focus:outline-none">
+                    🔔
+                    @if($user->unreadNotifications->count())
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">
+                            {{ $user->unreadNotifications->count() }}
+                        </span>
+                    @endif
+                </button>
+
+                <!-- Dropdown Box -->
+                <div x-show="open" @click.away="open = false"
+                    class="absolute right-0 mt-2 w-80 bg-white shadow-lg rounded-lg z-50 border border-gray-200 p-4 max-h-96 overflow-y-auto">
+
+                    <h3 class="font-semibold text-gray-700 mb-2">Notifications</h3>
+
+                    @forelse($user->notifications as $notification)
+                        <div class="border-b border-gray-200 pb-2 mb-2">
+                            <p class="text-sm text-gray-800">{{ $notification->data['message'] }}</p>
+                            <span class="text-xs text-gray-500">{{ $notification->created_at->diffForHumans() }}</span>
+                        </div>
+                    @empty
+                        <p class="text-sm text-gray-500">No notifications yet.</p>
+                    @endforelse
+                </div>
+            </div>
+        </div>
     </x-slot>
 
     <div class="min-h-screen flex bg-gray-100 pt-4 px-6">
@@ -33,8 +78,9 @@
             <!-- Input Box -->
             <div class="w-full max-w-3xl space-y-4">
                 <x-main-input-box :href="route('freelancer.explore')">Most Recent Jobs</x-main-input-box>
-                <x-main-input-box>View All Jobs</x-main-input-box>
+                <x-main-input-box :href="route('freelancer.explore')">View All Jobs</x-main-input-box>
                 <x-main-input-box>View Your Active Jobs</x-main-input-box>
+                <x-main-input-box :href="route('proposal.index')">View Your Proposals</x-main-input-box>
             </div>
         </main>
     </div>

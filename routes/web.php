@@ -23,13 +23,20 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'freelancer'])->group(function () {
     Route::get('/freelancer', [FreelancerController::class, 'index'])->name('freelancer.index');
+    Route::get('/freelancer/active-jobs', [FreelancerController::class, 'active'])->name('freelancer.active');
 
     Route::get('/freelancer/posts', [PostController::class, 'explore'])->name('freelancer.explore');
     Route::get('freelancer/posts/{post}', [PostController::class, 'display'])->name('freelancer.display');
 
     Route::get('/posts/{post}/proposal/create', [ProposalController::class, 'create'])->name('proposal.create');
     Route::post('/posts/{post}/proposal', [ProposalController::class, 'store'])->name('proposal.store');
+    Route::get('/proposals', [ProposalController::class , 'index'])->name('proposal.index');
 });
+
+Route::post('/notifications/mark-read', function () {
+    auth()->user()->unreadNotifications->markAsRead();
+    return response()->json(['status' => 'read']);
+})->middleware(['auth'])->name('notifications.markRead');
 
 require __DIR__ . '/auth.php';
 require __DIR__. '/client.php';
