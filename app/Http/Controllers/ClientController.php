@@ -95,9 +95,11 @@ class ClientController extends Controller
     public function hire(Proposal $proposal)
     {
         $post = $proposal->post;
+        $days = (int) filter_var($post->timeline, FILTER_SANITIZE_NUMBER_INT);
 
         $post->update([
             'status' => 'in_progress',
+            'deadline' => now()->addDays($days),
         ]);
 
         $proposal->user->notify(new freelancerHireNotification($proposal));

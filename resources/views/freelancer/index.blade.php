@@ -79,7 +79,7 @@
             <div class="w-full max-w-3xl space-y-4">
                 <x-main-input-box :href="route('freelancer.explore')">Most Recent Jobs</x-main-input-box>
                 <x-main-input-box :href="route('freelancer.explore')">View All Jobs</x-main-input-box>
-                <x-main-input-box>View Your Active Jobs</x-main-input-box>
+                <x-main-input-box :href="route('freelancer.active')">View Your Active Jobs</x-main-input-box>
                 <x-main-input-box :href="route('proposal.index')">View Your Proposals</x-main-input-box>
             </div>
         </main>

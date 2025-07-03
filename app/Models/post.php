@@ -17,6 +17,7 @@ class post extends Model
         'price',
         'timeline',
         'status',
+        'deadline',
     ];
 
     public function user()

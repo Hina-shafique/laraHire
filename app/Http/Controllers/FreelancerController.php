@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\freelancer;
+use App\Models\post;
 use App\Http\Requests\StorefreelancerRequest;
 use App\Http\Requests\UpdatefreelancerRequest;
 use Illuminate\Support\Facades\Auth;
@@ -72,6 +73,14 @@ class FreelancerController extends Controller
 
     public function active()
     {
-        //
+        $user = auth()->user();
+
+        $posts = Post::whereHas('proposals' , function($query) use ($user){
+            $query->where('user_id', $user->id);
+        })->where('status', 'in_progress')->get();
+
+        return view('freelancer.active-jobs', [
+            'posts' => $posts,
+        ]);
     }
 }
