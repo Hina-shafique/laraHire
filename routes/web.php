@@ -5,6 +5,7 @@ use App\Http\Controllers\FreelancerController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProposalController;
+use App\Http\Controllers\SubmitworkController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -31,6 +32,9 @@ Route::middleware(['auth', 'freelancer'])->group(function () {
     Route::get('/posts/{post}/proposal/create', [ProposalController::class, 'create'])->name('proposal.create');
     Route::post('/posts/{post}/proposal', [ProposalController::class, 'store'])->name('proposal.store');
     Route::get('/proposals', [ProposalController::class , 'index'])->name('proposal.index');
+
+    Route::get('/submit-work/{post}' , [SubmitworkController::class, 'create'])->name('submit.work');
+    Route::post('/submit-work/{post}' , [SubmitworkController::class, 'store'])->name('submit.store');
 });
 
 Route::post('/notifications/mark-read', function () {

@@ -65,4 +65,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(proposal::class);
     }
+
+    public function submitwork()
+    {
+        return $this->hasMany(submitwork::class);
+    }
 }

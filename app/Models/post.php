@@ -29,4 +29,9 @@ class post extends Model
     {
         return $this->hasMany(proposal::class);
     }
+
+    public function submitwork()
+    {
+        return $this->hasMany(submitwork::class);
+    }
 }

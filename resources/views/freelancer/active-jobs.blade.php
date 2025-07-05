@@ -7,7 +7,7 @@
         <p>{{ $post->timeline }}</p>
         <p>Deadline: {{ $post->deadline}}</p>
 
-        <a href='' class="text-blue-600 underline mt-2 inline-block">
+        <a href='{{ route('submit.work', $post->id) }}' class="text-blue-600 underline mt-2 inline-block">
             Submit Work
         </a>
     </div>
