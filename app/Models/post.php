@@ -32,6 +32,6 @@ class post extends Model
 
     public function submitwork()
     {
-        return $this->hasMany(submitwork::class);
+        return $this->hasOne(submitwork::class)->where('user_id', auth()->id());
     }
 }

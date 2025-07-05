@@ -14,6 +14,18 @@ Route::middleware(['auth', 'client'])->group(function () {
     Route::post('/client/hire/{proposal}', [ClientController::class, 'hire'])
         ->name('client.hire.freelancer');
 
+    Route::get('/client/review-submission/{post}', [ClientController::class, 'reviewSubmission'])
+        ->name('client.review');
+
+    Route::post('client/submit-confirm/{post}', [ClientController::class, 'submitConfirm'])
+        ->name('submitConfirm');
+
+    Route::get('/client/rate-freelancer/{post}', [ClientController::class, 'rateFreelancer'])
+        ->name('rateFreelancer');
+
+    Route::post('client/submit-rating/{post}',[ClientController::class, 'submitRating'])
+        ->name('client.submit.rating');
+
     Route::get('/posts', [PostController::class, 'index'])
         ->name('posts.index');
 
