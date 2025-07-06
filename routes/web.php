@@ -3,9 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/register');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -23,5 +21,5 @@ Route::post('/notifications/mark-read', function () {
 })->middleware(['auth'])->name('notifications.markRead');
 
 require __DIR__ . '/auth.php';
-require __DIR__. '/client.php';
-require __DIR__. '/freelancer.php';
+require __DIR__ . '/client.php';
+require __DIR__ . '/freelancer.php';

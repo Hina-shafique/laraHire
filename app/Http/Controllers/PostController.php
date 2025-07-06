@@ -61,6 +61,10 @@ class PostController extends Controller
      */
     public function edit(post $post)
     {
+        if ($post->user_id !== auth()->id()) {
+            abort(403, 'You can only edit your own posts.');
+        }
+
         return view('post.edit', [
             'post' => $post
         ]);
@@ -98,7 +102,7 @@ class PostController extends Controller
 
     public function display(post $post)
     {
-        return view('freelancer.posts.display',[
+        return view('freelancer.posts.display', [
             'post' => $post,
         ]);
     }
