@@ -17,6 +17,9 @@ Route::middleware(['auth', 'client'])->group(function () {
     Route::get('/client/review-submission/{post}', [ClientController::class, 'reviewSubmission'])
         ->name('client.review');
 
+    Route::get('/client/active-jobs', [ClientController::class, 'activejobs'])
+        ->name('client.active.jobs');
+
     Route::post('client/submit-confirm/{post}', [ClientController::class, 'submitConfirm'])
         ->name('submitConfirm');
 

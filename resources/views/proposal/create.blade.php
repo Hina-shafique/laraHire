@@ -21,7 +21,11 @@
         <form action="{{ route('proposal.store', $post->id) }}" method="POST" enctype="multipart/form-data"
             class="space-y-6">
             @csrf
-
+            @if (session('error'))
+                <div class="bg-red-100 text-red-700 p-3 rounded mb-4 max-w-4xl mx-auto">
+                    {{ session('error') }}
+                </div>
+            @endif
             <!-- Cover Letter -->
             <div>
                 <label for="cover_letter" class="block text-sm font-medium text-gray-700">Cover Letter</label>

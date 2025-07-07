@@ -37,7 +37,7 @@
                                     </a>
                                     <span
                                         class="px-3 py-1 text-sm font-medium rounded-full
-                                                            {{ $post->status === 'open' ? 'bg-green-100 text-green-800' : ($post->status === 'in_progress' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-300 text-gray-700') }}">
+                                            {{ $post->status === 'open' ? 'bg-green-100 text-green-800' : ($post->status === 'in_progress' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-300 text-gray-700') }}">
                                         {{ ucfirst($post->status) }}
                                     </span>
                                 </div>

@@ -47,8 +47,8 @@ class ProposalController extends Controller
 
         $data = $request->validated();
 
-        if ($request->hasFile('attachment')) {
-            $data['attachment'] = $request->file('attachment')->store('proposals', 'public');
+        if ($request->hasFile('file_path')) {
+            $data['file_path'] = $request->file('file_path')->store('proposals', 'public');
         }
 
         $data['user_id'] = $userId;

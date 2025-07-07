@@ -109,6 +109,14 @@ class ClientController extends Controller
         return redirect()->route('client.index')->with('success', 'Job completed and rating submitted.');
     }
 
+    public function activejobs()
+    {
+        $user = Auth()->user();
+        $posts = $user->posts;
+
+        return view('client.active-jobs', compact('posts'));
+    }
+
      /**
      * Show the form for creating a new resource.
      */
