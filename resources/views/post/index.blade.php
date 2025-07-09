@@ -14,7 +14,7 @@
             </x-aside-box>
 
             <x-aside-box :title="'Active Jobs'">
-                <p class="mb-2"><strong>Your Active Jobs are:</strong> 4</p>
+                <p class="mb-2"><strong>Your Active Jobs are:</strong> {{ $user->posts->whereIn('status', ['open', 'in_progress'])->count() }}</p>
             </x-aside-box>
 
             <x-aside-box :title="'Total Spend'">
@@ -51,6 +51,8 @@
                                 <div class="text-sm text-gray-600 leading-relaxed mt-6">
                                     {{ $post->description }}
                                 </div>
+                                @auth
+                                @if (auth()->id() === $post->user_id)
                                 <a href="{{ route('posts.edit', $post->id) }}"
                                     class="mt-6 inline-block border border-gray-300 font-bold px-2 py-1 rounded hover:bg-gray-100 transition">
                                     Edit Post
@@ -63,6 +65,8 @@
                                     class="mt-6 inline-block border border-gray-300 font-bold px-2 py-1 rounded hover:bg-gray-100 transition">
                                     View Peoposals
                                 </a>
+                                @endif
+                                @endauth
                             </li>
                         </x-main-input-box>
                     @endforeach

@@ -31,4 +31,9 @@ class freelancer extends Model
         return $this->hasMany(proposal::class);
     }
 
+    protected $casts = [
+        'language' => 'array', // ✅ Add this line
+    ];
+
+
 }

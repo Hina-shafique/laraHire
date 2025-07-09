@@ -61,7 +61,7 @@
                 <hr>
                 <p class="mb-2 mt-2"><strong>Description:</strong> {{ $freelancer->description }}</p>
                 <hr>
-                <p class="mt-2"><strong>Language:</strong> {{ $freelancer->language }}</p>
+                <p class="mt-2"><strong>Language:</strong> {{ implode(', ', $freelancer->language) }}</p>
             </x-aside-box>
 
             <x-aside-box :title="'Your Experience'">

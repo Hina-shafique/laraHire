@@ -29,64 +29,67 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $commonRules = [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'user_type' => ['required', 'in:client,freelancer'],
-        ]);
+        ];
 
-
-        // Step 2: Create the user
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        // Step 3: Based on user_type, create client or freelancer record
-       if ($request->user_type === 'client') {
-        $request->validate([
+        $clientRules = [
             'location' => ['required', 'string'],
             'language' => ['required', 'string'],
-        ]);
+        ];
 
-        $user->client()->create([
-            'location' => $request->location,
-            'language' => $request->language,
-        ]);
-    } else if ($request->user_type === 'freelancer') {
-        $request->validate([
+        $freelancerRules = [
             'description' => ['required', 'string'],
             'skills' => ['required', 'string'],
             'language' => ['required', 'string'],
             'location' => ['required', 'string'],
             'experience' => ['nullable', 'string'],
-        ]);
+        ];
 
-        $user->freelancer()->create([
-            'description' => $request->description,
-            'skills' => $request->skills,
-            'language' => $request->language,
-            'location' => $request->location,
-            'experience' => $request->experience,
-        ]);
-    }
-    
-
-        // Step 4: Fire registered event and login
-        event(new Registered($user));
-
-        Auth::login($user);
-        // Step 5: Redirect to respective dashboard
+        // Merge the rules depending on user_type
         if ($request->user_type === 'client') {
-            return redirect()->route('client.index');
-        }elseif
-         ($request->user_type === 'freelancer') {
-            return redirect()->route('freelancer.index');
+            $rules = array_merge($commonRules, $clientRules);
+        } else {
+            $rules = array_merge($commonRules, $freelancerRules);
         }
 
-        // Fallback
-        return redirect('/');
+        // Validate everything once
+        $validated = $request->validate($rules);
+
+        // Create user
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        // Handle based on user type
+        if ($validated['user_type'] === 'client') {
+            $user->client()->create([
+                'location' => $validated['location'],
+                'language' => $validated['language'],
+            ]);
+        } else {
+            $languageArray = array_map('trim', explode(',', $validated['language']));
+
+            $user->freelancer()->create([
+                'description' => $validated['description'],
+                'skills' => $validated['skills'],
+                'language' => $languageArray, // ✅ will store as JSON
+                'location' => $validated['location'],
+                'experience' => $validated['experience'],
+            ]);
+        }
+
+        event(new Registered($user));
+        Auth::login($user);
+
+        return $validated['user_type'] === 'client'
+            ? redirect()->route('client.index')
+            : redirect()->route('freelancer.index');
     }
+
 }
