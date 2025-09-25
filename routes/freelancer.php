@@ -23,6 +23,9 @@ Route::middleware(['auth', 'freelancer'])->group(function () {
     Route::get('/posts/{post}/proposal/create', [ProposalController::class, 'create'])
         ->name('proposal.create');
 
+    Route::get('/posts/{post}/proposal/generate', [ProposalController::class, 'generate'])
+        ->name('proposal.generate');
+
     Route::post('/posts/{post}/proposal', [ProposalController::class, 'store'])
         ->name('proposal.store');
 

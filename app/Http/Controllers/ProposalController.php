@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Ai\AiServices;
 use App\Models\proposal;
 use App\Http\Requests\StoreproposalRequest;
 use App\Http\Requests\UpdateproposalRequest;
 use App\Models\post;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request;
 
 class ProposalController extends Controller
 {
@@ -15,10 +18,10 @@ class ProposalController extends Controller
     public function index()
     {
         $proposals = proposal::with('post')
-        ->where('user_id', Auth()->id())
-        ->latest()
-        ->get();
-        return view('freelancer.proposal.index',[
+            ->where('user_id', Auth()->id())
+            ->latest()
+            ->get();
+        return view('freelancer.proposal.index', [
             'proposals' => $proposals,
         ]);
     }
@@ -26,12 +29,26 @@ class ProposalController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(post $post)
+    public function create(Post $post)
     {
         return view('proposal.create', [
             'post' => $post,
         ]);
     }
+
+    public function generate(Post $post)
+    {
+        $jobDescription = $post->description;
+
+        $description = new AiServices();
+        $proposal = $description->generateResponse($jobDescription);
+
+        return response()->json([
+            'proposal' => $proposal,
+        ]);
+    }
+
+
 
     /**
      * Store a newly created resource in storage.

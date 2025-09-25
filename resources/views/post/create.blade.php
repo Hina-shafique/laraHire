@@ -18,10 +18,15 @@
             </div>
 
             <!-- Description -->
-            <div>
+            <div class="relative">
                 <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
                 <textarea name="description" id="description" rows="4" placeholder="Add job description"
                     class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+
+                <button id="generateBtn" type="button"
+                    class="absolute bottom-2 right-2 px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-500 transition">
+                    Generate with AI
+                </button>
             </div>
 
             <!-- Price -->
@@ -60,4 +65,35 @@
             @endif
         </form>
     </div>
+    <script>
+        const messageField = document.getElementById('description');
+        const button = document.getElementById('generateBtn');
+        const titleField = document.getElementById('title');
+
+        button.addEventListener('click', async () => {
+            button.disabled = true;
+            messageField.value = 'Generating...';
+
+            try {
+                const response = await fetch('{{ route('post.generate') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        title: titleField.value
+                    })
+                });
+                const data = await response.json();
+
+                messageField.value = data.post || 'Failed to generate proposal. Please try again.';
+
+                button.style.display = 'none';
+            } catch (error) {
+                messageField.value = 'Error generating proposal. Please try again.';
+                button.disabled = false;
+            }
+        });
+    </script>
 </x-app-layout>

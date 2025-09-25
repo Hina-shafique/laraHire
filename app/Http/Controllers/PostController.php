@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ai\AiServices;
 use App\Models\post;
 use App\Http\Requests\StorepostRequest;
 use App\Http\Requests\UpdatepostRequest;
@@ -29,6 +30,18 @@ class PostController extends Controller
     public function create()
     {
         return view('post.create');
+    }
+
+    public function generate(Request $request)
+    {
+        $jobDescription = 'Create a job post for a ' . $request->title;
+
+        $description = new AiServices();
+        $post = $description->generateResponse($jobDescription);
+
+        return response()->json([
+            'post' => $post,
+        ]);
     }
 
     /**

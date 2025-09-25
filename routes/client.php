@@ -35,6 +35,9 @@ Route::middleware(['auth', 'client'])->group(function () {
     Route::get('/post/create', [PostController::class, 'create'])
         ->name('post.create');
 
+    Route::post('/post/generate', [PostController::class, 'generate'])
+        ->name('post.generate');
+
     Route::post('/posts', [PostController::class, 'store'])
         ->name('posts.store');
 
