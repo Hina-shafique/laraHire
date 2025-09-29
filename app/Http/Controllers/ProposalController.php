@@ -21,7 +21,7 @@ class ProposalController extends Controller
             ->where('user_id', Auth()->id())
             ->latest()
             ->get();
-        return view('freelancer.proposal.index', [
+        return view('freelancer.submit-proposals.index', [
             'proposals' => $proposals,
         ]);
     }
@@ -31,7 +31,7 @@ class ProposalController extends Controller
      */
     public function create(Post $post)
     {
-        return view('proposal.create', [
+        return view('freelancer.proposal.create', [
             'post' => $post,
         ]);
     }

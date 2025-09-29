@@ -18,7 +18,7 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $posts = Post::query()->latest()->paginate(5);
-        return view('post.index', [
+        return view('client.post.index', [
             'posts' => $posts,
             'user' => $user,
         ]);
@@ -29,7 +29,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        return view('client.post.create');
     }
 
     public function generate(Request $request)
@@ -64,7 +64,7 @@ class PostController extends Controller
      */
     public function show(post $post)
     {
-        return view('post.show', [
+        return view('client.post.show', [
             'post' => $post,
         ]);
     }
@@ -78,7 +78,7 @@ class PostController extends Controller
             abort(403, 'You can only edit your own posts.');
         }
 
-        return view('post.edit', [
+        return view('client.post.edit', [
             'post' => $post
         ]);
     }

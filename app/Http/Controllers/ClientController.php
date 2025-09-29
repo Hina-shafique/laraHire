@@ -41,7 +41,7 @@ class ClientController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        return view('client.proposals.index', [
+        return view('client.recieve-proposals.index', [
             'post' => $post,
         ]);
     }
