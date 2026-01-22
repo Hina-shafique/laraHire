@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\ensureUserIsFreelancer;
+use Closure;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Models\freelancer;
 use App\Models\post;
 use App\Models\Client;
 use App\Http\Requests\StorefreelancerRequest;
 use App\Http\Requests\UpdatefreelancerRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Http\Request;
 
-class FreelancerController extends Controller
+class FreelancerController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $user = Auth::user();
@@ -23,54 +24,6 @@ class FreelancerController extends Controller
             'user' => $user,
             'freelancer' => $freelancer,
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StorefreelancerRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(freelancer $freelancer)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(freelancer $freelancer)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatefreelancerRequest $request, freelancer $freelancer)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(freelancer $freelancer)
-    {
-        //
     }
 
     public function active()
@@ -106,5 +59,18 @@ class FreelancerController extends Controller
         ]);
 
         return redirect()->route('freelancer.index')->with('success', 'Client rated successfully!');
+    }
+
+    public static function middleware()
+    {
+        return [
+            function (Request $request, Closure $next) {
+                $user = $request->user();
+                if (!$user || !$user->freelancer) {
+                    abort(403, 'access denied');
+                }
+                return $next($request);
+            }
+        ];
     }
 }

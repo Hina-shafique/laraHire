@@ -9,17 +9,6 @@ use App\Models\post;
 
 class SubmitworkController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(Post $post)
     {
         return view('freelancer.submit-work.create', compact('post'));
@@ -40,35 +29,4 @@ class SubmitworkController extends Controller
         return redirect()->route('freelancer.index')->with('success', 'submitted');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(submitwork $submitwork)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(submitwork $submitwork)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatesubmitworkRequest $request, submitwork $submitwork)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(submitwork $submitwork)
-    {
-        //
-    }
 }

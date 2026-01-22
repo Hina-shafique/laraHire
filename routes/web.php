@@ -2,18 +2,21 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Client;
 
 Route::redirect('/', '/register');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::get('/client.json', function (Client $client) {
+   return response()->streamJson([
+    'client' => Client::cursor(),
+   ]);
 });
+
+Route::view('/dashboard', 'dashboard')
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+Route::singleton('profile', ProfileController::class)->destroyable();
 
 Route::post('/notifications/mark-read', function () {
     auth()->user()->unreadNotifications->markAsRead();

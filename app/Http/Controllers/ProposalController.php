@@ -7,10 +7,12 @@ use App\Models\proposal;
 use App\Http\Requests\StoreproposalRequest;
 use App\Http\Requests\UpdateproposalRequest;
 use App\Models\post;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use App\Http\Middleware\EnsureUserIsFreelancer;
 
-class ProposalController extends Controller
+
+class ProposalController extends Controller implements HasMiddleware
 {
     /**
      * Display a listing of the resource.
@@ -75,37 +77,11 @@ class ProposalController extends Controller
         return redirect()->route('freelancer.explore')->with('success', 'Proposal submitted successfully!');
     }
 
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(proposal $proposal)
+    public static function middleware()
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(proposal $proposal)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateproposalRequest $request, proposal $proposal)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(proposal $proposal)
-    {
-        //
+        return [
+            'auth',
+            new Middleware(EnsureUserIsFreelancer::class),
+        ];
     }
 }

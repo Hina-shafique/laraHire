@@ -28,7 +28,7 @@
 
         <main class="flex-1 px-6">
             <div class="w-full max-w-3xl space-y-4">
-                <x-main-input-box :href="route('post.create')">Add New Job</x-main-input-box>
+                <x-main-input-box :href="route('posts.create')">Add New Job</x-main-input-box>
                 <x-main-input-box :href="route('posts.index')">View All Jobs</x-main-input-box>
                 <x-main-input-box :href="route('client.active.jobs')">View Active Jobs</x-main-input-box>
             </div>

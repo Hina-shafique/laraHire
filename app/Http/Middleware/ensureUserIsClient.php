@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ensureUserIsClient
+class EnsureUserIsClient
 {
     /**
      * Handle an incoming request.

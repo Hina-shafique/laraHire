@@ -6,10 +6,12 @@ use App\Ai\AiServices;
 use App\Models\post;
 use App\Http\Requests\StorepostRequest;
 use App\Http\Requests\UpdatepostRequest;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
 
-class PostController extends Controller
+class PostController extends Controller implements HasMiddleware
 {
     /**
      * Display a listing of the resource.
@@ -99,7 +101,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(post $post)
+    public function delete(post $post)
     {
         $post->delete();
         return redirect()->route('posts.index');
@@ -118,5 +120,13 @@ class PostController extends Controller
         return view('freelancer.posts.display', [
             'post' => $post,
         ]);
+    }
+
+    public static function middleware()
+    {
+        return [
+            'auth',
+            new Middleware('client'),
+        ];
     }
 }
